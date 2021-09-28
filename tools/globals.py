@@ -3,6 +3,7 @@ import sys
 import platform
 
 ENGINE_NAME = "style"
+PROJECT_NAME = "styleeditor"
 
 V_MAJOR = 0
 V_MINOR = 0

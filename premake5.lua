@@ -7,11 +7,16 @@ workspace "style"
         "Release",
     }
 
+tdir = "bin/%{cfg.buildcfg}/%{prj.name}"
+odir = "obj/%{cfg.buildcfg}/%{prj.name}"
+
 project "styleeditor"
     location "styleeditor"
     kind "ConsoleApp"
     language "C++"
     cppdialect "C++17"
+    targetdir(tdir)
+    objdir(odir)
 
     files {
         "%{prj.name}/src/**.h",
