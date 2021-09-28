@@ -18,14 +18,14 @@ repos:
     rev: v1.3.1
     hooks:
       - id: docformatter
-        args: [--in-place, --wrap-descriptions=90, --wrap-summaries=120]
+        args: [--in-place, --wrap-descriptions=100, --wrap-summaries=120]
 
   # Python imports formatter
   - repo: https://github.com/pre-commit/mirrors-isort
     rev: v5.7.0
     hooks:
       - id: isort
-        args: [--line-length=90, --lines-between-types=1, --multi-line=3, --section-default=THIRDPARTY, --force-grid-wrap=0,
+        args: [--line-length=100, --lines-between-types=1, --multi-line=3, --section-default=THIRDPARTY, --force-grid-wrap=0,
           --length-sort, --use-parentheses, --trailing-comma]
 
    # Python code formatter
@@ -33,14 +33,14 @@ repos:
     rev: 21.9b0
     hooks:
       - id: black
-        args: [--line-length=90, --target-version=py39]
+        args: [--line-length=100, --target-version=py39]
 
   # Python code linter
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.9.2
     hooks:
       - id: flake8
-        args: ['--ignore=W503,E203,C901,W605', --max-line-length=90]
+        args: ['--ignore=W503,E203,C901,W605', --max-line-length=100]
         # W503: Line break occurred before a binary operator
         # E203: Whitespace before ':' - also black compatible
         # C901: Function is too complex

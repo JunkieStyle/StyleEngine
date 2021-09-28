@@ -1,4 +1,3 @@
-MAJOR = 0
-MINOR = 0
+import globals
 
-print(f"Style Engine Tools version {MAJOR}.{MINOR}")
+print(f"Style Engine Tools version {globals.V_MAJOR}.{globals.V_MINOR}")
