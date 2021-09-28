@@ -17,7 +17,7 @@ project "styleeditor"
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp"
     }
-    
+
     flags {
         "FatalWarnings"
     }
