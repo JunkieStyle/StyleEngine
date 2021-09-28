@@ -45,3 +45,13 @@ repos:
         # E203: Whitespace before ':' - also black compatible
         # C901: Function is too complex
         # W605: invalid escape sequence
+
+  # C++ code hooks
+  - repo: https://github.com/pocc/pre-commit-hooks
+    rev: v1.3.4
+    hooks:
+      - id: clang-format
+        args: [--style=Google, 	-i]
+      - id: cppcheck
+      - id: cpplint
+        args: ['--filter=-legal/copyright']

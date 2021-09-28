@@ -1,9 +1,11 @@
 .vscode/
 .vs/
+__pycache__/
 bin*/
 logs/
 
 *.vcxproj
+*.vcxproj.user
 *.sln
 *.pyc
 Makefile
