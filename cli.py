@@ -11,12 +11,13 @@ def run_command(command, command_executable="python3"):
     command_path = os.path.join(os.getcwd(), "tools", f"{command}.py")
     if not os.path.exists(command_path):
         print(f"Invalid command: {command}")
-        return
+        return -1
 
-    subprocess.call([command_executable, command_path])
+    return subprocess.run([command_executable, command_path]).returncode
 
 
 for command in args.commands:
     print("\n" + "-" * 80)
     print(f"Executing command: {command}")
-    run_command(command)
+    if run_command(command) != 0:
+        break

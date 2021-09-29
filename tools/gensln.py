@@ -1,16 +1,19 @@
+import sys
 import subprocess
 
 import globals
 
 if globals.is_windows():
-    subprocess.call(["cmd.exe", "/c", "premake\\premake5", "vs2019"])
+    subprocess.run(["cmd.exe", "/c", "premake\\premake5", "vs2019"], check=True)
 
 elif globals.is_linux():
-    subprocess.call(["premake/premake5.linux", "gmake2"])
+    subprocess.run(["premake/premake5.linux", "gmake2"], check=True)
 
 elif globals.is_macos():
-    subprocess.call(["premake/premake5.macos", "gmake2"])
-    subprocess.call(["premake/premake5.macos", "xcode4"])
+    subprocess.run(["premake/premake5.macos", "gmake2"], check=True)
+    subprocess.run(["premake/premake5.macos", "xcode4"], check=True)
 
 else:
     print(f"Not supported for {globals.PLATFORM}, please extend CLI tool 'premake.py'")
+
+sys.exit(0)
