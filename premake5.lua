@@ -34,6 +34,40 @@ project "style"
         "FatalWarnings"
     }
 
+    filter { "system:windows", "configurations:*" }
+        systemversion "latest"
+        defines {
+            "STYLE_PLATFORM_WINDOWS"
+        }
+
+    filter { "system:macosx", "configurations:*" }
+        xcodebuildsettings {
+            ["MACOSX_DEPLOYMENT_SETTINGS"] = "10.15",
+            ["UseModernBuildSystem"] = "No"
+        }
+        defines {
+            "STYLE_PLATFORN_MACOS"
+        }
+
+    filter { "system:linux", "configurations:*" }
+        defines {
+            "STYLE_PLATFORM_LINUX"
+        }
+
+    filter "configurations:Debug"
+        defines {
+            "STYLE_CONFIG_DEBUG"
+        }
+        runtime "Debug"
+        symbols "on"
+
+    filter "configurations:Release"
+        defines {
+            "STYLE_CONFIG_RELEASE"
+        }
+        runtime "Release"
+        symbols "off"
+        optimize "on"
 
 project "styleeditor"
     location "styleeditor"
@@ -42,7 +76,6 @@ project "styleeditor"
     cppdialect "C++17"
     staticruntime "on"
     links "style"
-
 
     targetdir(tdir)
     objdir(odir)
@@ -59,3 +92,38 @@ project "styleeditor"
     flags {
         "FatalWarnings"
     }
+
+    filter { "system:windows", "configurations:*" }
+        systemversion "latest"
+        defines {
+            "STYLE_PLATFORM_WINDOWS"
+        }
+
+    filter { "system:macosx", "configurations:*" }
+        xcodebuildsettings {
+            ["MACOSX_DEPLOYMENT_SETTINGS"] = "10.15",
+            ["UseModernBuildSystem"] = "No"
+        }
+        defines {
+            "STYLE_PLATFORN_MACOS"
+        }
+
+    filter { "system:linux", "configurations:*" }
+        defines {
+            "STYLE_PLATFORM_LINUX"
+        }
+
+    filter "configurations:Debug"
+        defines {
+            "STYLE_CONFIG_DEBUG"
+        }
+        runtime "Debug"
+        symbols "on"
+
+    filter "configurations:Release"
+        defines {
+            "STYLE_CONFIG_RELEASE"
+        }
+        runtime "Release"
+        symbols "off"
+        optimize "on"
