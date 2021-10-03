@@ -10,6 +10,9 @@ workspace "style"
 tdir = "bin/%{cfg.buildcfg}/%{prj.name}"
 odir = "obj/%{cfg.buildcfg}/%{prj.name}"
 
+externals = {}
+externals["sdl2"] = "external/sdl2/"
+
 project "style"
     location "style"
     kind "StaticLib"
@@ -21,13 +24,14 @@ project "style"
     objdir(odir)
 
     files {
-        "%{prj.name}/include/**.h",
-        "%{prj.name}/src/**.h",
+        "%{prj.name}/include/**.hpp",
+        "%{prj.name}/src/**.hpp",
         "%{prj.name}/src/**.cpp"
     }
 
     sysincludedirs {
-        "%{prj.name}/include/style"
+        "%{prj.name}/include/style",
+        "%{externals.sdl2}/include"
     }
 
     flags {
@@ -39,6 +43,12 @@ project "style"
         defines {
             "STYLE_PLATFORM_WINDOWS"
         }
+        libdirs {
+            "%{externals.sdl2}/lib"
+        }
+        links {
+            "SDL2"
+        }
 
     filter { "system:macosx", "configurations:*" }
         xcodebuildsettings {
@@ -47,6 +57,9 @@ project "style"
         }
         defines {
             "STYLE_PLATFORN_MACOS"
+        }
+        links {
+            "SDL2.framework"
         }
 
     filter { "system:linux", "configurations:*" }
@@ -81,7 +94,7 @@ project "styleeditor"
     objdir(odir)
 
     files {
-        "%{prj.name}/src/**.h",
+        "%{prj.name}/src/**.hpp",
         "%{prj.name}/src/**.cpp"
     }
 
