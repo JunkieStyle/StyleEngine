@@ -7,8 +7,7 @@ int main() {
   style::GetInfo();
   style::Initialize();
   style::Shutdown();
-#ifdef STYLE_PLATFORM_WINDOWS
-  system("pause");
-#endif
+  std::cout << "Please press ENTER to continue ...";
+  std::cin.ignore();
   return 0;
 }
