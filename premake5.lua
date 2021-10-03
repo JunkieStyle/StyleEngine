@@ -12,6 +12,7 @@ odir = "obj/%{cfg.buildcfg}/%{prj.name}"
 
 externals = {}
 externals["sdl2"] = "external/sdl2/"
+externals["maclibs"] = "external/maclibs/"
 
 project "style"
     location "style"
@@ -50,6 +51,7 @@ project "style"
             "SDL2"
         }
 
+
     filter { "system:macosx", "configurations:*" }
         xcodebuildsettings {
             ["MACOSX_DEPLOYMENT_SETTINGS"] = "10.15",
@@ -58,6 +60,8 @@ project "style"
         defines {
             "STYLE_PLATFORN_MACOS"
         }
+        abspath = path.getabsolute("%{externals.maclibs}")
+        linkoptions {"-F " .. abspath}
         links {
             "SDL2.framework"
         }
