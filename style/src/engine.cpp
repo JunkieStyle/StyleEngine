@@ -6,39 +6,74 @@
 
 namespace style {
 
-void GetInfo() {
-#ifdef STYLE_CONFIG_DEBUG
-  std::cout << "Configuration: DEBUG" << std::endl;
-#endif
-#ifdef STYLE_CONFIG_RELEASE
-  std::cout << "Configuration: RELEASE" << std::endl;
-#endif
-#ifdef STYLE_PLATFORM_WINDOWS
-  std::cout << "platform: windows" << std::endl;
-#endif
-#ifdef STYLE_CONFIG_LINUX
-  std::cout << "platform: linux" << std::endl;
-#endif
-#ifdef STYLE_CONFIG_MACOS
-  std::cout << "platform: macos" << std::endl;
-#endif
+void Engine::Run() {
+  if (Initialize()) {
+    while (is_running_) {
+      window_.PumpEvents();
+    }
+    Shutdown();
+  }
 }
 
-bool Initialize() {
-  bool ret = true;
+// private
+Engine& Engine::GetInstance() {
+  if (!instance_) {
+    instance_ = new Engine();
+  }
+  return *instance_;
+}
+
+bool Engine::Initialize() {
+  bool ret = false;
 
   if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
     std::cout << "Error: " << SDL_GetError() << std::endl;
-    ret = false;
   } else {
     SDL_version version;
     SDL_GetVersion(&version);
     std::cout << "SDL " << (int32_t)version.major << "." << (int32_t)version.minor << "."
               << (int32_t)version.patch << std::endl;
+
+    if (window_.Create()) {
+      ret = true;
+      is_running_ = true;
+    }
+  }
+
+  if (!ret) {
+    std::cout << "Engine initialization failed. Shutting down ... " << std::endl;
+    window_.Shutdown();
   }
 
   return ret;
 }
 
-void Shutdown() { SDL_Quit(); }
+void Engine::Shutdown() {
+  is_running_ = false;
+  window_.Shutdown();
+  SDL_Quit();
+}
+
+void Engine::GetInfo() {
+#ifdef style_config_debug
+  std::cout << "configuration: debug" << std::endl;
+#endif
+#ifdef style_config_release
+  std::cout << "configuration: release" << std::endl;
+#endif
+#ifdef style_platform_windows
+  std::cout << "platform: windows" << std::endl;
+#endif
+#ifdef style_config_linux
+  std::cout << "platform: linux" << std::endl;
+#endif
+#ifdef style_config_macos
+  std::cout << "platform: macos" << std::endl;
+#endif
+}
+
+// singleton
+Engine* Engine::instance_ = nullptr;
+Engine::Engine() : is_running_(false) { GetInfo(); }
+
 }  // namespace style
