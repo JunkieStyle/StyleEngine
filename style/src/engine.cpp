@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "SDL2/SDL.h"
+#include "log.hpp"
 
 namespace style {
 
@@ -25,6 +26,8 @@ Engine& Engine::GetInstance() {
 
 bool Engine::Initialize() {
   bool ret = false;
+  log_manager_.Initialize();
+  this->GetInfo();
 
   if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
     std::cout << "Error: " << SDL_GetError() << std::endl;
@@ -50,13 +53,18 @@ bool Engine::Initialize() {
 
 void Engine::Shutdown() {
   is_running_ = false;
+
+  // managers
+  log_manager_.Shutdown();
+
   window_.Shutdown();
   SDL_Quit();
 }
 
 void Engine::GetInfo() {
-#ifdef style_config_debug
-  std::cout << "configuration: debug" << std::endl;
+  STYLE_TRACE("StyleEngine v{}.{}", 0, 1);
+#ifdef style_config_release
+  std::cout << "configuration: release" << std::endl;
 #endif
 #ifdef style_config_release
   std::cout << "configuration: release" << std::endl;
@@ -74,6 +82,6 @@ void Engine::GetInfo() {
 
 // singleton
 Engine* Engine::instance_ = nullptr;
-Engine::Engine() : is_running_(false) { GetInfo(); }
+Engine::Engine() : is_running_(false) {}
 
 }  // namespace style

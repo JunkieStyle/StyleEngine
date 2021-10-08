@@ -19,5 +19,5 @@ def run_command(command, command_executable="python3"):
 for command in args.commands:
     print("\n" + "-" * 80)
     print(f"Executing command: {command}")
-    if run_command(command) != 0:
+    if run_command(command.strip()) != 0:
         break

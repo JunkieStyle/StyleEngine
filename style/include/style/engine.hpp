@@ -1,5 +1,6 @@
 #pragma once
 #include "core/window.hpp"
+#include "managers/logmanager.hpp"
 
 namespace style {
 
@@ -11,13 +12,20 @@ class Engine {
   void inline Quit() { is_running_ = false; }
 
  private:
-  Engine();
   void GetInfo();
   bool Initialize();
   void Shutdown();
-  static Engine* instance_;
+
+ private:
   core::Window window_;
   bool is_running_;
+
+  // managers
+  style::managers::LogManager log_manager_;
+
+  // singleton
+  Engine();
+  static Engine* instance_;
 };
 
 }  // namespace style

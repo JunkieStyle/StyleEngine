@@ -13,6 +13,7 @@ odir = "obj/%{cfg.buildcfg}/%{prj.name}"
 externals = {}
 externals["sdl2"] = "external/sdl2/"
 externals["maclibs"] = "external/maclibs/"
+externals["spdlog"] = "external/spdlog/"
 
 project "style"
     location "style"
@@ -32,7 +33,8 @@ project "style"
 
     sysincludedirs {
         "%{prj.name}/include/style",
-        "%{externals.sdl2}/include"
+        "%{externals.sdl2}/include",
+        "%{externals.spdlog}/include",
     }
 
     flags {
