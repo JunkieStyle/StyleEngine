@@ -1,6 +1,16 @@
 #pragma once
 #include "spdlog/spdlog.h"
 
+#if defined(STYLE_PLATFORM_WINDOWS)
+#define STYLE_BREAK __debugbreak();
+#elif defined(STYLE_PLATFORM_MACOS)
+#define STYLE_BREAK __builtin_debugtrap();
+#elif defined(STYLE_PLATFORM_LINUX)
+#define STYLE_BREAK __buitin_trap();
+#else
+#define STYLE_BREAK (void)0;
+#endif
+
 #define STYLE_DEFAULT_LOGGER_NAME "stylelogger"
 #ifndef STYLE_CONFIG_RELEASE
 #define STYLE_TRACE(...)                                        \
@@ -27,6 +37,10 @@
   if (spdlog::get(STYLE_DEFAULT_LOGGER_NAME) != nullptr) {         \
     spdlog::get(STYLE_DEFAULT_LOGGER_NAME)->critical(__VA_ARGS__); \
   }
+// clang-format off
+#define STYLE_ASSERT(x, msg) \
+  if ((x)) {} else {STYLE_CRITICAL("ASSERT - {}\n\t{}\n\tin file: {}\n\ton line: {}", #x, msg, __FILE__, __LINE__); STYLE_BREAK } // NOLINT
+// clang-format on
 #else
 // disable logging for release builds
 #define STYLE_TRACE(...) (void)0

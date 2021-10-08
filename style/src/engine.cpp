@@ -23,6 +23,8 @@ Engine& Engine::GetInstance() {
 }
 
 bool Engine::Initialize() {
+  STYLE_ASSERT(!is_initialized_, "Attempting to call Engine::Initialize() more than once!");
+
   bool ret = false;
   log_manager_.Initialize();
   this->GetInfo();
@@ -38,6 +40,7 @@ bool Engine::Initialize() {
     if (window_.Create()) {
       ret = true;
       is_running_ = true;
+      is_initialized_ = true;
     }
   }
 
@@ -80,6 +83,6 @@ void Engine::GetInfo() {
 
 // singleton
 Engine* Engine::instance_ = nullptr;
-Engine::Engine() : is_running_(false) {}
+Engine::Engine() : is_running_(false), is_initialized_(false) {}
 
 }  // namespace style

@@ -19,6 +19,7 @@ class Engine {
  private:
   core::Window window_;
   bool is_running_;
+  bool is_initialized_;
 
   // managers
   style::managers::LogManager log_manager_;
