@@ -1,9 +1,8 @@
 #include "core/window.hpp"
 
-#include <iostream>
-
 #include "SDL2/SDL.h"
 #include "engine.hpp"
+#include "log.hpp"
 
 namespace style::core {
 
@@ -20,7 +19,7 @@ bool Window::Create() {
   window_ =
       SDL_CreateWindow("Style Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 0);
   if (!window_) {
-    std::cout << SDL_GetError() << std::endl;
+    STYLE_ERROR("Error creationg window: {}", SDL_GetError());
     ret = false;
   }
   return ret;

@@ -1,7 +1,5 @@
 #include "engine.hpp"
 
-#include <iostream>
-
 #include "SDL2/SDL.h"
 #include "log.hpp"
 
@@ -30,12 +28,12 @@ bool Engine::Initialize() {
   this->GetInfo();
 
   if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-    std::cout << "Error: " << SDL_GetError() << std::endl;
+    STYLE_ERROR("Error: {}", SDL_GetError());
   } else {
     SDL_version version;
     SDL_GetVersion(&version);
-    std::cout << "SDL " << (int32_t)version.major << "." << (int32_t)version.minor << "."
-              << (int32_t)version.patch << std::endl;
+    STYLE_INFO("SDL : {}.{}.{}", (int32_t)version.major, (int32_t)version.minor,
+               (int32_t)version.patch);
 
     if (window_.Create()) {
       ret = true;
@@ -44,7 +42,7 @@ bool Engine::Initialize() {
   }
 
   if (!ret) {
-    std::cout << "Engine initialization failed. Shutting down ... " << std::endl;
+    STYLE_ERROR("Engine initialization failed. Shutting down ... : {}");
     window_.Shutdown();
   }
 
@@ -63,20 +61,20 @@ void Engine::Shutdown() {
 
 void Engine::GetInfo() {
   STYLE_TRACE("StyleEngine v{}.{}", 0, 1);
-#ifdef style_config_release
-  std::cout << "configuration: release" << std::endl;
+#ifdef STYLE_CONFIG_RELEASE
+  STYLE_DEBUG("Configuration: release");
 #endif
-#ifdef style_config_release
-  std::cout << "configuration: release" << std::endl;
+#ifdef STYLE_CONFIG_DEBUG
+  STYLE_DEBUG("Configuration: debug");
 #endif
-#ifdef style_platform_windows
-  std::cout << "platform: windows" << std::endl;
+#ifdef STYLE_PLATFORM_WINDOWS
+  STYLE_WARN("platform: windows");
 #endif
-#ifdef style_config_linux
-  std::cout << "platform: linux" << std::endl;
+#ifdef STYLE_CONFIG_LINUX
+  STYLE_WARN("platform: linux");
 #endif
-#ifdef style_config_macos
-  std::cout << "platform: macos" << std::endl;
+#ifdef STYLE_CONFIG_MACOS
+  STYLE_WARN("platform: macos");
 #endif
 }
 
