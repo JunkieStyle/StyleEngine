@@ -10,10 +10,15 @@ workspace "style"
 tdir = "bin/%{cfg.buildcfg}/%{prj.name}"
 odir = "obj/%{cfg.buildcfg}/%{prj.name}"
 
+-- External dependancies
 externals = {}
 externals["sdl2"] = "external/sdl2/"
 externals["maclibs"] = "external/maclibs/"
 externals["spdlog"] = "external/spdlog/"
+externals["glad"] = "external/glad/"
+
+-- Processing glad before anything else
+include "external/glad"
 
 project "style"
     location "style"
@@ -35,10 +40,14 @@ project "style"
         "%{prj.name}/include/style",
         "%{externals.sdl2}/include",
         "%{externals.spdlog}/include",
+        "%{externals.glad}/include"
     }
 
     flags {
         "FatalWarnings"
+    }
+    defines {
+        "GLFW_INCLUDE_NONE"
     }
 
     filter { "system:windows", "configurations:*" }
@@ -50,7 +59,8 @@ project "style"
             "%{externals.sdl2}/lib"
         }
         links {
-            "SDL2"
+            "SDL2",
+            "glad"
         }
 
 
@@ -65,12 +75,17 @@ project "style"
         abspath = path.getabsolute("%{externals.maclibs}")
         linkoptions {"-F " .. abspath}
         links {
-            "SDL2.framework"
+            "SDL2.framework",
+            "glad"
         }
 
     filter { "system:linux", "configurations:*" }
         defines {
             "STYLE_PLATFORM_LINUX"
+        }
+        links {
+            "SDL2",
+            "glad"
         }
 
     filter "configurations:Debug"
