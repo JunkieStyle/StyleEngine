@@ -9,6 +9,8 @@ void Engine::Run() {
   if (Initialize()) {
     while (is_running_) {
       window_.PumpEvents();
+      window_.BeginRender();
+      window_.EndRender();
     }
     Shutdown();
   }
