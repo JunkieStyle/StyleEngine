@@ -154,7 +154,8 @@ project "styleeditor"
         runtime "Debug"
         symbols "on"
 
-    filter "configurations:Release"
+
+        filter "configurations:Release"
         defines {
             "STYLE_CONFIG_RELEASE"
         }

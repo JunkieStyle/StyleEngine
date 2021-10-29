@@ -6,7 +6,7 @@ project "glad"
     objdir(odir)
 
     files {
-        "include/**.hpp",
+        "include/**.h",
         "src/**.c",
     }
 
@@ -31,3 +31,4 @@ project "glad"
         runtime "Release"
         symbols "off"
         optimize "on"
+

@@ -1,6 +1,7 @@
 #pragma once
 
 struct SDL_Window;
+using SDL_GLContext = void*;
 
 namespace style::core {
 
@@ -14,6 +15,7 @@ class Window {
 
  private:
   SDL_Window* window_;
+  SDL_GLContext gl_context_;
 };
 
 }  // namespace style::core
